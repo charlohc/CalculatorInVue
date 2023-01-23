@@ -1,87 +1,104 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
-</script>
+import { RouterLink, RouterView } from 'vue-router'</script>
 
 <template>
   <header>
-<!--
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
--->
+    <h1>Calculator!</h1>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+<!--    <div class="wrapper">
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
-    </div>
+    </div>-->
   </header>
+  <div id = "wrapper">
+    <div class = "answer-field">
+      <div id = "answer">{{ calculatorValue || 0 }}</div>
+    </div>
+  <div class="buttons">
+    <div
+        class="button"
+        v-for="n in btnArr"
+        :key = "n"
+    >
+      <div class="text" @click="clicked(n)">
+        {{ n }}
+      </div>
+    </div>
+  </div>
+  </div>
 
+  <div class = "answer-log">
+    <p>Calculation log:</p>
+    <ul>
+    <p id = "log">{{ log }} </p>
+    </ul>
+  </div>
   <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
+<style scoped lang="scss"></style>
+<script>
+export default {
+  //TODO: gi feilmeldinger, feks når deler med 0, hvorfor vil bare regne med et og et tall?? hvorfor vil ikke bytte linje??
+  data() {
+    return {
+      calculatorValue: "",
+      btnArr: ["C", "ANS", "NEW", "+", "1", "2", "3", "-", "4", "5", "6", "*", "7", "8", "9", "/", " ", "0", ".", "="],
+      operator: null,
+      previousCalculatorValue: "",
+      log: "",
+      newLine: false,
+    };
+  },
+  methods: {
+    clicked(n) {
+      if (n === "C") {
+        this.calculatorValue = "";
+        this.log = "";
+      }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
+      if (n === "NEW") {
+        this.calculatorValue = " ";
+        this.log += "\n";
+      }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
+      if (!isNaN(n) || n === ".") {
+        this.calculatorValue += n + " ";
+        this.log += n + " ";
+      }
 
-nav a:first-of-type {
-  border: 0;
-}
+      if (n === "+" || n === "-" || n === "*" || n === "/") {
+        this.operator = n;
+        this.previousCalculatorValue = this.calculatorValue;
+        this.calculatorValue = " ";
+        this.log += n + " "
+      }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+      if (n === "=" || n === "ANS") {
+        if (this.operator === "/" && this.calculatorValue === "0") {
+          this.calculatorValue = "Error";
+        } else {
+          this.calculatorValue = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
+          this.previousCalculatorValue = "";
+          this.operator = null;
+          this.newLine = false;
+          this.log += "= " + this.calculatorValue + "\n";
+        }
+      }
+    },
+
+   /* logCalculation() {
+      if (this.newLine) {
+        document.getElementById("log").innerHTML += "<li>";
+      }
+      document.getElementById("log").innerHTML += "hi";
+    }*/
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
-</style>
+</script>
