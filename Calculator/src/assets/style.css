@@ -51,13 +51,17 @@
     text-shadow: grey 1px 1px;
 }
 
-.answer-log {
+#answer-log {
     margin-top: 20px;
     margin-left: 25vw;
     margin-right: 25vw;
     text-align: center;
     border-style: solid;
     border-color: #FFC0CB;
+}
+
+.body {
+    background-color: pink;
 }
 
 

@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'</script>
 
 <template>
+
   <header>
     <h1>Calculator!</h1>
 
@@ -30,13 +31,14 @@ import { RouterLink, RouterView } from 'vue-router'</script>
   </div>
   </div>
 
-  <div class = "answer-log">
+  <div id = "answer-log">
     <p>Calculation log:</p>
     <ul>
-    <p id = "log">{{ log }} </p>
+    <p id = "log"></p>
     </ul>
   </div>
   <RouterView />
+
 </template>
 
 
@@ -44,61 +46,63 @@ import { RouterLink, RouterView } from 'vue-router'</script>
 
 <style scoped lang="scss"></style>
 <script>
+let logArr;
 export default {
-  //TODO: gi feilmeldinger, feks når deler med 0, hvorfor vil bare regne med et og et tall?? hvorfor vil ikke bytte linje??
   data() {
     return {
       calculatorValue: "",
       btnArr: ["C", "ANS", "NEW", "+", "1", "2", "3", "-", "4", "5", "6", "*", "7", "8", "9", "/", " ", "0", ".", "="],
       operator: null,
       previousCalculatorValue: "",
-      log: "",
-      newLine: false,
     };
   },
   methods: {
+    var: logArr = [],
     clicked(n) {
       if (n === "C") {
         this.calculatorValue = "";
-        this.log = "";
-      }
+        this.previousCalculatorValue= "";
+        this.operator = "";
+        document.getElementById("log").innerHTML = " ";
+        logArr.length = 0;
 
+      }
       if (n === "NEW") {
         this.calculatorValue = " ";
-        this.log += "\n";
+        logArr.length = 0;
       }
 
       if (!isNaN(n) || n === ".") {
-        this.calculatorValue += n + " ";
-        this.log += n + " ";
+        this.calculatorValue += n;
+        logArr.push(n);
+        console.log(logArr.toString());
       }
 
       if (n === "+" || n === "-" || n === "*" || n === "/") {
         this.operator = n;
         this.previousCalculatorValue = this.calculatorValue;
         this.calculatorValue = " ";
-        this.log += n + " "
+        logArr.push(n);
       }
 
       if (n === "=" || n === "ANS") {
-        if (this.operator === "/" && this.calculatorValue === "0") {
-          this.calculatorValue = "Error";
-        } else {
-          this.calculatorValue = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
-          this.previousCalculatorValue = "";
-          this.operator = null;
-          this.newLine = false;
-          this.log += "= " + this.calculatorValue + "\n";
+          var answer = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
+          if(answer == "Infinity") {
+            this.calculatorValue = "Error";
+          } else {
+            this.calculatorValue = answer;
+            this.previousCalculatorValue = "";
+            this.operator = null;
+            logArr.push(n);
+            logArr.push(answer);
+            document.getElementById("log").innerHTML += "<li>" + logArr.toString().replaceAll(",", "") + "</li>";
+
+          }
         }
       }
     },
-
-   /* logCalculation() {
-      if (this.newLine) {
-        document.getElementById("log").innerHTML += "<li>";
-      }
-      document.getElementById("log").innerHTML += "hi";
-    }*/
-  }
 }
+
 </script>
+
+
