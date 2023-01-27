@@ -79,17 +79,27 @@ export default {
       }
 
       if (n === "+" || n === "-" || n === "*" || n === "/") {
-        this.operator = n;
-        this.previousCalculatorValue = this.calculatorValue;
-        this.calculatorValue = " ";
-        logArr.push(n);
+        if(this.legalNumber(this.calculatorValue)) {
+          this.previousCalculatorValue = this.calculatorValue;
+          this.operator = n;
+          this.calculatorValue = " ";
+          logArr.push(n);
+        } else {
+          this.errorHandler();
+        }
       }
 
       if (n === "=" || n === "ANS") {
-          var answer = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
-          if(answer == "Infinity") {
-            this.calculatorValue = "Error";
-          } else {
+
+          if(!this.legalNumber(this.calculatorValue)) {
+            this.errorHandler();
+            console.log("illegal number");
+          } else if (eval(this.previousCalculatorValue + this.operator + this.calculatorValue) == "Infinity") {
+            this.errorHandler();
+            console.log("Infinity");
+          } else{
+            console.log("ok");
+            const answer = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
             this.calculatorValue = answer;
             this.previousCalculatorValue = "";
             this.operator = null;
@@ -99,8 +109,27 @@ export default {
 
           }
         }
+      },
+    legalNumber(number) {
+      var comma = 0;
+      for (let i = 0; i < number.length; i++) {
+        if ( logArr[i] == ".") {
+          comma++;
+          if(comma > 1) {
+            return false;
+          }
+        }
       }
+      return true;
     },
+    errorHandler() {
+      this.calculatorValue = "Error";
+      /*this.calculatorValue = "";
+      this.previousCalculatorValue = "";
+      this.operator = null;
+      logArr.length =0;*/
+    }
+    }
 }
 
 </script>
