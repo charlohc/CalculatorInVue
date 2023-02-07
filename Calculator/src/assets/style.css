@@ -7,6 +7,17 @@
     border-width: 10px;
 }
 
+.wrapperFields {
+    max-width: 450px;
+    padding-left: 50px;
+    align-content: center;
+    margin: 10vw;
+    border-color: #FFC0CB;
+    border-style: solid;
+    border-width: 10px;
+    padding-bottom: 10px;
+}
+
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -52,18 +63,71 @@
 }
 
 #answer-log {
-    margin-top: 20px;
-    margin-left: 25vw;
-    margin-right: 25vw;
+    padding: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
     text-align: center;
     border-style: solid;
-    border-color: #FFC0CB;
+    border-width: 5px;
+    border-color: pink;
+    box-shadow: grey 3px 1px;
+    max-width: 400px;
+    max-height: 450px;
+}
+
+#log{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
 }
 
 .body {
     background-color: pink;
 }
 
+a,
+.green{
+  color: lightpink;
+    transition: 0.4s;
+    font-size: 30px;
+    margin: 10px;
+}
 
+#nameField{
+    border-style: solid;
+    border-color: pink;
+    width: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: grey 3px 1px;
+    font-size: larger;
+}
+#mailField{
+    border-style: solid;
+    border-color: pink;
+    width: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: grey 3px 1px;
+    font-size: larger;
+}
 
+#messageField{
+    border-style: solid;
+    border-color: pink;
+    height: 10vw;
+    width: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: grey 3px 1px;
+    font-size: larger;
+    white-space: pre-wrap;
+}
+
+#submit {
+    margin-top: 25px;
+    margin-left: 11vw;
+
+}
 
