@@ -3,10 +3,31 @@
 
   <div class="form-wrapper">
   <label for="name">Name:</label>
-  <input id="name" v-model="name">
+  <input id="name" v-model="name" onkeypress="
+if (!value) { document.getElementById('nameError').innerHTML= 'This field is required';
+document.getElementById('submitButton').id = 'disabled';
+
+}else {
+  document.getElementById('nameError').innerHTML= '';
+  document.getElementById('disabled').id = 'submitButton';
+}
+
+  ">
+    <p id="nameError"></p>
 
   <label for="mail">Mail:</label>
-  <input id="mail" v-model="mail">
+  <input id="mail" v-model="mail" onkeypress= "
+   if (!value || !String(value).match('@') || !String(value).match('.')) {
+
+        document.getElementById('mailError').innerHTML= 'Enter a valid mail address';
+       document.getElementById('submitButton').id = 'disabled';
+
+        } else {
+         document.getElementById('disabled').id = 'submitButton';
+         document.getElementById('mailError').innerHTML= '';
+}
+">
+    <p id="mailError"></p>
 
   <label for="rating">Rating:</label>
   <select id="rating" v-model.number="rating">
@@ -17,10 +38,10 @@
   <option>bad</option>
   </select>
 
-  <label for="review">   pls explain:</label>
+  <label for="review">explain:</label>
   <textarea id="review" v-model="text"></textarea>
 
-  <input class="button" type="submit" value="Submit">
+  <input id="submitButton" type="submit" value="Submit">
     </div>
   </form>
 
@@ -38,12 +59,18 @@
   </template>
 <style scoped lang="scss"></style>
   <script>
+  import axios from "axios";
+  import {ref} from 'vue';
+  import {useCounterStore} from "../stores/counter";
 
-export default {
+  const name= ref('');
+  const store = useCounterStore();
+
+  export default {
   data() {
     return {
       name: '',
-      mail: '',
+      mail: ' ',
       text: '',
       rating: null,
       reviews: [],
@@ -55,36 +82,48 @@ export default {
       }
     }
   },
+  mounted() {
+    this.name = this.$store.getters.getcurrentName;
+    fetch('http://localhost:3000/user')
+        .then(res => res.json())
+        .then(data => this.reviews = data)
+        .catch(err => console.log(err))
+  },
   methods: {
-    onSubmit() {
-      if (this.name === "" || this.mail ==="" || this.text ==="" || this.rating === null) {
+     onSubmit() {
+      if (this.name === "" || this.mail === "" || this.text === "" || this.rating === null) {
         alert("Review is incomplete. Please fill out every field.")
         return
       }
+      this.id ++;
 
       const review = {
         name: this.name,
         mail: this.mail,
         text: this.text,
-        rating: this.rating
+        rating: this.rating,
+        id:0
       }
 
-     if (this.name.match(".*\\d.*")) {
-       alert("Invalid name")
+      if (this.name.match(".*\\d.*")) {
+        alert("Invalid name")
 
-     } else if (!this.mail.match(".") || !this.mail.match("@")) {
-       alert("invalid mail")
+      } else if (!this.mail.match(".") || !this.mail.match("@")) {
+        alert("invalid mail")
 
-     } else {
-       this.addReview(review);
-       this.name = ""
-       this.mail = ""
-       this.text = ""
-       this.rating = null
-     }
+      } else {
+        this.addReview(review);
+        this.name = ""
+        this.mail = ""
+        this.text = ""
+        this.rating = null
+      }
     },
-    addReview(review) {
+    async addReview(review) {
       this.reviews.push(review);
+
+      await axios.post('http://localhost:3000/user',review)
+          .then(response => (this.info = response))
     }
   }
 }

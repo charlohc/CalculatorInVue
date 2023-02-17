@@ -1,5 +1,6 @@
 <!--
 TODO: CE fjerner kun sist som ble skrevet feil, kan ikke endre mer enn en tilbake, fiks
+TODO: lag bedre logg greie
 loggen kan ha en egen knapp for å tømme
 
 -->
@@ -19,7 +20,7 @@ loggen kan ha en egen knapp for å tømme
           v-for="n in btnArr"
           :key = "n"
       >
-        <div class="text" @click="clicked(n)">
+        <div :data-test="n" class="text" @click="clicked(n)">
           {{ n }}
         </div>
       </div>
@@ -89,13 +90,16 @@ export default {
     clickedNumberOrComma(n) {
       this.continuingEquation();
       this.calculatorValue += n;
+      console.log("number " + n);
       logArr.push(n + " ");
     },
 
     clickedOperator(n) {
       if(this.legalNumber(this.calculatorValue)) {
         this.previousCalculatorValue = this.calculatorValue;
+        console.log("previos value" + this.previousCalculatorValue);
         this.operator = n;
+        console.log("operator " + n);
         this.calculatorValue = " ";
         logArr.push(" " + n + " ");
       } else {
@@ -111,11 +115,12 @@ export default {
       } else{
          this.answer = eval(this.previousCalculatorValue + this.operator + this.calculatorValue);
         this.calculatorValue = this.answer;
+        console.log("answer: " + this.answer);
         this.previousCalculatorValue = "";
         this.operator = null;
         logArr.push(n);
         logArr.push(" " + this.answer);
-        document.getElementById("log").innerHTML += "<li>" + logArr.toString().replaceAll(",", "") + "</li>";
+        //document.getElementById("log").innerHTML += "<li>" + logArr.toString().replaceAll(",", "") + "</li>";
 
       }
     },

@@ -24,7 +24,7 @@
     alignment: center;
 
 }
-.button {
+.button, #submitButton {
     border-style: solid;
     border-color: #FFC0CB;
     margin: 3px;
@@ -154,7 +154,7 @@ a,
     border-color: cornflowerblue;
     background-color: lightblue;
     box-shadow: grey 2px 1px 1px;
-    width: 200px;
+    min-width: 200px;
     margin-right: 150px;
     margin-bottom: 10px;
     font-size: medium;
@@ -166,5 +166,8 @@ a,
     border-style: solid;
     border-color: black;
     padding: 10px;
+}
+#disabled {
+    background-color: grey;
 }
 

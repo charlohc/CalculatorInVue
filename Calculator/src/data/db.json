@@ -1,0 +1,44 @@
+{
+  "user": [
+    {
+      "name": "Kari",
+      "text": "very nice",
+      "mail": "Kari@gmail.com"
+    },
+    {
+      "name": "vbn",
+      "mail": " bnm@bh.",
+      "text": "nhm",
+      "rating": "ok",
+      "id": 1
+    },
+    {
+      "name": "bnm",
+      "mail": " bhnjm@ghj.",
+      "text": "bnm",
+      "rating": "Very nice",
+      "id": 2
+    },
+    {
+      "name": "Ingrid",
+      "mail": " ingrid@gmail.com",
+      "text": "veryyy col",
+      "rating": "Very cool",
+      "id": 3
+    },
+    {
+      "name": "hei",
+      "mail": " hei@gmail.com",
+      "text": "fghj",
+      "rating": "Very cool",
+      "id": 4
+    },
+    {
+      "name": "Charlotte",
+      "mail": " Charlotte@gmail.com",
+      "text": "Test message",
+      "rating": "Very nice",
+      "id": 5
+    }
+  ]
+}
