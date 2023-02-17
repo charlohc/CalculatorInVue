@@ -8,6 +8,7 @@ loggen kan ha en egen knapp for å tømme
   <header>
     <h1>Calculator!</h1>
   </header>
+  <button class="button" type="button" @click="emptyLog()">Empty log</button>
   <div id = "wrapper">
     <div class = "answer-field">
       <div id = "answer">{{ calculatorValue || 0 }}</div>
@@ -31,7 +32,6 @@ loggen kan ha en egen knapp for å tømme
       <p id = "log"></p>
     </ul>
   </div>
-  <button type="button" @click="emptyLog()">Empty log</button>
 </template>
 
 

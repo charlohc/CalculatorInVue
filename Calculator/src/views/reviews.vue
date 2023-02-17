@@ -1,20 +1,7 @@
 <template>
 <form class="review-form" @submit.prevent="onSubmit">
-<h3>Leave a review</h3>
 
-  <div  v-if="reviews.length" class="review-container">
-    <h3>Reviews:</h3>
-    <ul>
-      <li v-for="(review, index) in reviews" :key="index">
-        {{ review.name }} thinks this page is {{ review.rating }}
-        <br/>
-        "{{ review.text}}"
-        <br/>
-        reachable at: {{review.mail}}
-      </li>
-    </ul>
-  </div>
-
+  <div class="form-wrapper">
   <label for="name">Name:</label>
   <input id="name" v-model="name">
 
@@ -30,14 +17,26 @@
   <option>bad</option>
   </select>
 
-  <label for="review">pls explain:</label>
+  <label for="review">   pls explain:</label>
   <textarea id="review" v-model="text"></textarea>
 
   <input class="button" type="submit" value="Submit">
+    </div>
   </form>
 
+  <div v-if="reviews.length" class="review-container">
+    <h3 id="h3">Reviews:</h3>
+    <div class="review" v-for="(review, index) in reviews" :key="index">
+      {{ review.name }} thinks this page is {{ review.rating }}
+      <br/>
+      "{{ review.text}}"
+      <br/>
+      reachable at: {{review.mail}}
+    </div>
+  </div>
+
   </template>
-  <style scoped lang="scss"></style>
+<style scoped lang="scss"></style>
   <script>
 
 export default {
@@ -58,7 +57,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.name === " " || this.mail ===" " || this.text ===" " || this.rating === null) {
+      if (this.name === "" || this.mail ==="" || this.text ==="" || this.rating === null) {
         alert("Review is incomplete. Please fill out every field.")
         return
       }
