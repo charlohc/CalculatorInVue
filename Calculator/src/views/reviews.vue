@@ -88,14 +88,13 @@ document.getElementById('submitButton').id = 'disabled';
     this.name = store.user.name;
     this.mail = store.user.mail;
 
+    fetch('http://localhost:3000/user')
+        .then(res => res.json())
+        .then(data => this.reviews = data)
+        .catch(err => console.log(err))
+
   },
   methods: {
-      correctName(value) {
-
-      },
-    correctMail() {
-
-    },
 
      onSubmit() {
       if (this.name === "" || this.mail === "" || this.text === "" || this.rating === null) {

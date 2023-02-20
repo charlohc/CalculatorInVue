@@ -11,6 +11,27 @@
       "text": "nhm",
       "rating": "ok",
       "id": 1
+    },
+    {
+      "name": "nilsen",
+      "mail": "kn@ut.no",
+      "text": "bhj",
+      "rating": "ok",
+      "id": 2
+    },
+    {
+      "name": "kurt",
+      "mail": " knut@gmail.com",
+      "text": "hjk",
+      "rating": "Very nice",
+      "id": 3
+    },
+    {
+      "name": "Mathias",
+      "mail": "Mathias@gmail.com",
+      "text": "Wiiii cool",
+      "rating": "Very cool",
+      "id": 4
     }
   ]
 }
